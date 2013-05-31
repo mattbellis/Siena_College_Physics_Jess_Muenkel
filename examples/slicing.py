@@ -1,6 +1,6 @@
 import numpy as np
 
-x = np.random.random(100)
+x = np.random.random(100000)
 
 y = x[x>0.2]
 
