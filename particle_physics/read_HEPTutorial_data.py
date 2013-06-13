@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pylab as plt
+import itertools
 
 #import ROOT
 
@@ -12,7 +13,11 @@ not_at_end = True
 
 masses_muons1 = []
 masses_muons2 = []
-
+e=[]
+px=[]
+py=[]
+pz=[]
+bq=[]
 event_count = 0
 while ( not_at_end ):
 
@@ -127,56 +132,22 @@ while ( not_at_end ):
             mass2 = np.sqrt(e0**2 - ( px0**2 + py0**2 + pz0**2 ))
 
             masses_muons2.append(mass2)
-           '''
-        
-        if len(jets)>2 and bquark_jet_tag>0:
-            if len(jets)==3:
-                e0,e1,e2 =   jets[0][0],jets[1][0],jets[2][0]
-                px0,px1,px2 = jets[0][1],jets[1][1],jets[2][1]
-                py0,py1,py2 = jets[0][2],jets[1][2],jets[2][2]
-                pz0,pz1,pz2 = jets[0][3],jets[1][3],jets[2][3]
-                mass1 = np.sqrt((e0+e1+e2)**2-((px0+px1+px2)**2+(py0+py1+py2)**2+(pz0+pz1+pz2)**2))
-                masses_muons1.append(mass1)
-            if len(jets)==4:
-                e0,e1,e2,e3 =   jets[0][0],jets[1][0],jets[2][0],jets[3][0]
-                px0,px1,px2,px3 = jets[0][1],jets[1][1],jets[2][1],jets[3][1]
-                py0,py1,py2,py3 = jets[0][2],jets[1][2],jets[2][2],jets[3][2]
-                pz0,pz1,pz2,pz3 = jets[0][3],jets[1][3],jets[2][3],jets[3][3]
-                mass1 = np.sqrt((e0+e1+e2)**2-((px0+px1+px2)**2+(py0+py1+py2)**2+(pz0+pz1+pz2)**2))
-                masses_muons1.append(mass1)
-                mass1 = np.sqrt((e0+e1+e3)**2-((px0+px1+px3)**2+(py0+py1+py3)**2+(pz0+pz1+pz3)**2))
-                masses_muons1.append(mass1)
-                mass1 = np.sqrt((e0+e2+e3)**2-((px0+px2+px3)**2+(py0+py2+py3)**2+(pz0+pz2+pz3)**2))
-                masses_muons1.append(mass1)
-                mass1 = np.sqrt((e1+e2+e3)**2-((px1+px2+px3)**2+(py1+py2+py3)**2+(pz1+pz2+pz3)**2))
-                masses_muons1.append(mass1)
-            if len(jets)==5:
-                e0,e1,e2,e3,e4 =   jets[0][0],jets[1][0],jets[2][0],jets[3][0],jets[4][0]
-                px0,px1,px2,px3,px4 = jets[0][1],jets[1][1],jets[2][1],jets[3][1],jets[4][1]
-                py0,py1,py2,py3,py4 = jets[0][2],jets[1][2],jets[2][2],jets[3][2],jets[4][2]
-                pz0,pz1,pz2,pz3,pz4 = jets[0][3],jets[1][3],jets[2][3],jets[3][3],jets[4][3]
-                
-                mass1 = np.sqrt((e0+e1+e2)**2-((px0+px1+px2)**2+(py0+py1+py2)**2+(pz0+pz1+pz2)**2))
-                masses_muons1.append(mass1)
-                mass1 = np.sqrt((e0+e1+e3)**2-((px0+px1+px3)**2+(py0+py1+py3)**2+(pz0+pz1+pz3)**2))
-                masses_muons1.append(mass1)
-                mass1 = np.sqrt((e0+e2+e3)**2-((px0+px2+px3)**2+(py0+py2+py3)**2+(pz0+pz2+pz3)**2))
-                masses_muons1.append(mass1)
-                mass1 = np.sqrt((e1+e2+e3)**2-((px1+px2+px3)**2+(py1+py2+py3)**2+(pz1+pz2+pz3)**2))
-                masses_muons1.append(mass1)
-                mass1 = np.sqrt((e0+e1+e4)**2-((px0+px1+px4)**2+(py0+py1+py4)**2+(pz0+pz1+pz4)**2))
-                masses_muons1.append(mass1)
-                mass1 = np.sqrt((e0+e2+e4)**2-((px0+px2+px4)**2+(py0+py2+py4)**2+(pz0+pz2+pz4)**2))
-                masses_muons1.append(mass1)
-                mass1 = np.sqrt((e0+e3+e4)**2-((px0+px3+px4)**2+(py0+py3+py4)**2+(pz0+pz3+pz4)**2))
-                masses_muons1.append(mass1)
-                mass1 = np.sqrt((e1+e2+e4)**2-((px1+px2+px4)**2+(py1+py2+py4)**2+(pz1+pz2+pz4)**2))
-                masses_muons1.append(mass1)
-                mass1 = np.sqrt((e1+e3+e4)**2-((px1+px3+px4)**2+(py1+py3+py4)**2+(pz1+pz3+pz4)**2))
-                masses_muons1.append(mass1)
-                mass1 = np.sqrt((e2+e3+e4)**2-((px2+px3+px4)**2+(py2+py3+py4)**2+(pz2+pz3+pz4)**2))
-                masses_muons1.append(mass1)
-                
+        '''
+        njets = len(jets)
+        for i in range(0,njets):
+            for j in range(i+1,njets):
+                for k in range(j+1,njets):
+                    e0,e1,e2 =   jets[i][0],jets[j][0],jets[k][0]
+                    px0,px1,px2 = jets[i][1],jets[j][1],jets[k][1]
+                    py0,py1,py2 = jets[i][2],jets[j][2],jets[k][2]
+                    pz0,pz1,pz2 = jets[i][3],jets[j][3],jets[k][3]
+                    bqj0,bqj1,bqj2=jets[i][4],jets[j][4],jets[k][4]
+                    
+                    if bqj0>0 or bqj1>0 or bqj2>0:
+                        mass1 = np.sqrt((e0+e1+e2)**2-((px0+px1+px2)**2+(py0+py1+py2)**2+(pz0+pz1+pz2)**2))
+                        masses_muons1.append(mass1)
+                    
+    
                 
             
 ''' mass of muons           
