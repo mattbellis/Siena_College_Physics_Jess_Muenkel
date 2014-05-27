@@ -167,7 +167,7 @@ plt.hist(masses_muons1,range=(0,30),bins=100)
 
 #mc_ttbar.txt invarent mass Pass the cut
 plt.figure()
-plt.hist(masses_muons1,range=(0,349),bins=100)
+plt.hist(masses_muons1,range=(0,700),bins=100)
 plt.title('Invariant Mass from Jets (pass the cut)')
 
 plt.show()
