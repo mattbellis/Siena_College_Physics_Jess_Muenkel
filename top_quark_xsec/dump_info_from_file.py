@@ -55,7 +55,7 @@ for s in truth_str:
 nev = chain.GetEntries()
 print "About to loop over %d collisions" % (nev)
 
-maximum_number_of_gen_particles = 16
+maximum_number_of_gen_particles = 32
 
 ################################################################################
 # Loop over the events
@@ -68,7 +68,7 @@ for n in xrange(nev):
     chain.GetEntry(n)
 
     #print '---------------------'
-    for i in xrange(16):
+    for i in xrange(32):
         pdg = chain.GetLeaf(truth_str[0]).GetValue(i)
         status = chain.GetLeaf(truth_str[1]).GetValue(i)
         pt = chain.GetLeaf(truth_str[2]).GetValue(i)
