@@ -1,15 +1,17 @@
 import numpy as np
 import matplotlib.pylab as plt
-import itertools
+#import itertools
 
 #import ROOT
 
 
-import sys
+#import sys
 
-f = open(sys.argv[1])
+#f = open(sys.argv[1])
+f = open('mc_ttbar.txt')
 
 not_at_end = True
+
 
 masses_muons1 = []
 masses_muons2 = []
