@@ -14,7 +14,13 @@ print len(collisions)
 count = 0
 for collision in collisions:
 
-    gen_particles = hep.get_truth_particles_from_collision(collision)
+    gen_particles,ak5jets,ca8jets = hep.get_truth_particles_from_collision(collision)
+
+    #print gen_particles
+    #print ak5jets
+    #print ca8jets
+
+    #exit()
 
     print "--------------------------"
     for p in gen_particles:
@@ -22,3 +28,14 @@ for collision in collisions:
 
         print "%-5d %-5d %8.5f %12.5f %12.5f" % (pdg,status,pt,eta,phi)
 
+    print "-------"
+    for p in ak5jets:
+        mass,pt,eta,phi = p
+
+        print "%8.5f %8.5f %12.5f %12.5f" % (mass,pt,eta,phi)
+
+    print "-------"
+    for p in ca8jets:
+        mass,pt,eta,phi = p
+
+        print "%8.5f %8.5f %12.5f %12.5f" % (mass,pt,eta,phi)

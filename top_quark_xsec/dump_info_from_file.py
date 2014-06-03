@@ -42,14 +42,28 @@ truth_str.append("floats_pfShyftTupleGenParticles_pt_ANA.obj")
 truth_str.append("floats_pfShyftTupleGenParticles_eta_ANA.obj")
 truth_str.append("floats_pfShyftTupleGenParticles_phi_ANA.obj")
 
+ak5jet_str = []
+ak5jet_str.append("floats_pfShyftTupleAK5GenJets_mass_ANA.obj")
+ak5jet_str.append("floats_pfShyftTupleAK5GenJets_pt_ANA.obj")
+ak5jet_str.append("floats_pfShyftTupleAK5GenJets_eta_ANA.obj")
+ak5jet_str.append("floats_pfShyftTupleAK5GenJets_phi_ANA.obj")
+
+ca8jet_str = []
+ca8jet_str.append("floats_pfShyftTupleCA8GenJets_mass_ANA.obj")
+ca8jet_str.append("floats_pfShyftTupleCA8GenJets_pt_ANA.obj")
+ca8jet_str.append("floats_pfShyftTupleCA8GenJets_eta_ANA.obj")
+ca8jet_str.append("floats_pfShyftTupleCA8GenJets_phi_ANA.obj")
+
 p4 = TLorentzVector()
 
 #chain.SetBranchStatus('*', 1 )
 chain.SetBranchStatus('*', 0 )
 for s in truth_str:
     chain.SetBranchStatus(s, 1 )
-#for s in top_str:
-    #chain.SetBranchStatus(s, 1 )
+for s in ak5jet_str:
+    chain.SetBranchStatus(s, 1 )
+for s in ca8jet_str:
+    chain.SetBranchStatus(s, 1 )
 
 
 nev = chain.GetEntries()
@@ -77,17 +91,40 @@ for n in xrange(nev):
 
         #print "%-5d %-5d %8.5f %12.5f %12.5f" % (pdg,status,pt,eta,phi)
 
-
         output+="%-5d " % (pdg)
         output+="%-5d " % (status)
         output+="%8.5f " % (pt)
         output+="%12.5f " % (eta)
         output+="%12.5f " % (phi)
 
+    for i in xrange(16):
+        mass = chain.GetLeaf(ak5jet_str[0]).GetValue(i)
+        pt = chain.GetLeaf(ak5jet_str[1]).GetValue(i)
+        eta = chain.GetLeaf(ak5jet_str[2]).GetValue(i)
+        phi = chain.GetLeaf(ak5jet_str[3]).GetValue(i)
+
+        #print "%-5d %-5d %8.5f %12.5f %12.5f" % (pdg,status,pt,eta,phi)
+
+        output+="%8.5f " % (mass)
+        output+="%8.5f " % (pt)
+        output+="%12.5f " % (eta)
+        output+="%12.5f " % (phi)
+
+    for i in xrange(16):
+        mass = chain.GetLeaf(ca8jet_str[0]).GetValue(i)
+        pt = chain.GetLeaf(ca8jet_str[1]).GetValue(i)
+        eta = chain.GetLeaf(ca8jet_str[2]).GetValue(i)
+        phi = chain.GetLeaf(ca8jet_str[3]).GetValue(i)
+
+        #print "%-5d %-5d %8.5f %12.5f %12.5f" % (pdg,status,pt,eta,phi)
+
+        output+="%8.5f " % (mass)
+        output+="%8.5f " % (pt)
+        output+="%12.5f " % (eta)
+        output+="%12.5f " % (phi)
+
     output += "\n"
 
-
-        
     outfile.write(output)
 
         
