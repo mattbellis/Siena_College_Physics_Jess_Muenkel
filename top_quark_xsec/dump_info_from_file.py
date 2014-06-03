@@ -13,8 +13,6 @@ import sys
 import numpy as np
 
 
-outfile=open("dump_info.txt","w")
-
 
 tag = "ttbar_MC_truth"
 #tag = "data"
@@ -30,6 +28,10 @@ chain = ROOT.TChain("Events")
 
 for file in sys.argv[1:]:
         chain.AddFile(file)
+
+outfilename = sys.argv[1].split('.root')[0]
+outfilename = "%s.dat" % (outfilename)
+outfile=open(outfilename,"w")
 
 ###############################################################################
 # List the specfic data elements that we want to get from the file.
