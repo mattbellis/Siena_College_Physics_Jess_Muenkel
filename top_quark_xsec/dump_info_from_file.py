@@ -138,12 +138,15 @@ outfile.close()
 
 
 ################################################################################
+'''
 if __name__=="__main__":
+    main()
     rep = ''
     while not rep in [ 'q', 'Q' ]:
         rep = raw_input( 'enter "q" to quit: ' )
         if 1 < len(rep):
             rep = rep[0]
+'''
 
 
 

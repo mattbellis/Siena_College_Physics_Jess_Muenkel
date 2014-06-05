@@ -11,7 +11,7 @@ t1=[]       #antitop and decay
 
 
 def return_top_decays(pdgs):
-    print pdgs
+    #print pdgs
     t0=[-999,-999,-999,-999,-999]       #top and decay 
     t1=[-999,-999,-999,-999,-999]       #antitop and decay
 
@@ -96,8 +96,8 @@ def return_top_decays(pdgs):
    
     
     
-    print t0
-    print t1
+    #print t0
+    #print t1
     return[t0,t1]
     
     
@@ -145,7 +145,7 @@ for collision in collisions:
 
     #exit()
 
-    print "--------------------------"
+    #print "--------------------------"
     pdgs=[]
     pts=[]
     etas=[]
@@ -183,7 +183,7 @@ for collision in collisions:
 
         
         
-        '''#finding the muons pt
+        #finding the muons pt
         if muon==False and status==3:
             if pdg==-13:
                 muon=True                
@@ -220,10 +220,10 @@ for collision in collisions:
             
     if pdgs[t0[1][3]]<6 and pdgs[t0[1][4]]<6:
         quarks_pt.append(pts[t0[1][3]])
-        quarks_pt.append(pts[t0[1][4]])'''
+        quarks_pt.append(pts[t0[1][4]])
 
 #print del_R
-'''#Finding top pt
+#Finding top pt
     top_pt.append(pts[t0[0][0]])
     top_pt.append(pts[t0[1][0]])        
 
@@ -277,7 +277,7 @@ plt.title("Top and Antitop Pt")
 plt.figure(2)
 #plt.hist(W_pt,bins=50)
 lkn.hist_err(W_pt,bins=50)
-plt.title("W and Anti_W Pt")
+plt.title(r"W and Anti_W p$_T$")
 
 plt.figure(3)
 #plt.hist(bottom_pt,bins=50)
@@ -286,26 +286,26 @@ plt.title("B and Anti_b Pt")
 
 
 plt.figure (4)
-plt.hist(muon_pt,bins=50)
-#lkn.hist_err(muon_pt,bins=50)
+#plt.hist(muon_pt,bins=50)
+lkn.hist_err(muon_pt,bins=100,range=(0,300))
 plt.title("Muon Pt")
 
 
 plt.figure (5)
-plt.hist(electron_pt,bins=50)
-#lkn.hist_err(electron_pt,bins=50)
+#plt.hist(electron_pt,bins=50)
+lkn.hist_err(electron_pt,bins=100,range=(0,300))
 plt.title("Electron Pt")
 
 
 
 plt.figure (6)
-plt.hist(neutrino_pt,bins=50)
-#lkn.hist_err(neutrino_pt,bins=50)
+#plt.hist(neutrino_pt,bins=50)
+lkn.hist_err(neutrino_pt,bins=100,range=(0,300))
 plt.title("Neutrino Pt")
 
 
 plt.figure (7)
-plt.hist(quarks_pt,bins=50)
-#lkn.hist_err(quarks_pt,bins=50)
+#plt.hist(quarks_pt,bins=50)
+lkn.hist_err(quarks_pt,bins=50)
 plt.title("Quark Pt")
-plt.show()'''
+plt.show()
