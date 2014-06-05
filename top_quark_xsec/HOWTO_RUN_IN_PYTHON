@@ -1,1 +1,3 @@
 python dump_info_from_file.py /data/CMS/files_for_the_analysis/mc/ttbar_inclusive/shyft_ultraslim_100_1_SK7.root
+
+python read_text_file_with_jets.py /data/CMS/files_for_the_analysis/mc/ttbar_inclusive/shyft_ultraslim_50_1_hos.dat
