@@ -271,41 +271,48 @@ for collision in collisions:
 
 plt.figure(1)
 #plt.hist(top_pt,bins=50)
-lkn.hist_err(top_pt,bins=50)
-plt.title("Top and Antitop Pt")
+lkn.hist_err(top_pt,bins=100,range=(0,300))
+plt.title(r"Top and Antitop p$_T$")
+plt.xlabel(r"p$_T$(GeV/c)")
 
 plt.figure(2)
 #plt.hist(W_pt,bins=50)
-lkn.hist_err(W_pt,bins=50)
+lkn.hist_err(W_pt,bins=100,range=(0,300))
 plt.title(r"W and Anti_W p$_T$")
+plt.xlabel(r"p$_T$(GeV/c)")
 
 plt.figure(3)
 #plt.hist(bottom_pt,bins=50)
-lkn.hist_err(bottom_pt,bins=50)
-plt.title("B and Anti_b Pt")
+lkn.hist_err(bottom_pt,bins=100,range=(0,300))
+plt.title(r"B and Anti_b p$_T$")
+plt.xlabel(r"p$_T$(GeV/c)")
 
 
 plt.figure (4)
 #plt.hist(muon_pt,bins=50)
 lkn.hist_err(muon_pt,bins=100,range=(0,300))
-plt.title("Muon Pt")
+plt.title(r"Muon p$_T$")
+plt.xlabel(r"p$_T$(GeV/c)")
 
 
 plt.figure (5)
 #plt.hist(electron_pt,bins=50)
 lkn.hist_err(electron_pt,bins=100,range=(0,300))
-plt.title("Electron Pt")
+plt.title(r"Electron p$_T$")
+plt.xlabel(r"p$_T$(GeV/c)")
 
 
 
 plt.figure (6)
 #plt.hist(neutrino_pt,bins=50)
 lkn.hist_err(neutrino_pt,bins=100,range=(0,300))
-plt.title("Neutrino Pt")
+plt.title(r"Neutrino p$_T$")
+plt.xlabel(r"p$_T$(GeV/c)")
 
 
 plt.figure (7)
 #plt.hist(quarks_pt,bins=50)
-lkn.hist_err(quarks_pt,bins=50)
-plt.title("Quark Pt")
+lkn.hist_err(quarks_pt,bins=100,range=(0,300))
+plt.title(r"Quark p$_T$")
+plt.xlabel(r"p$_T$(GeV/c)")
 plt.show()
