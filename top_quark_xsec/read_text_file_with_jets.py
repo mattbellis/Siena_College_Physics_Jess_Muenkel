@@ -193,7 +193,7 @@ for collision in collisions:
                 anti_muon=True
                 muon_pt.append(pt)
                 
-    #finding the electrons pt
+    '''#finding the electrons pt
         if electron==False and status==3:
             if pdg==-11:
                 electron=True                
@@ -315,4 +315,4 @@ plt.figure (7)
 lkn.hist_err(quarks_pt,bins=100,range=(0,300))
 plt.title(r"Quark p$_T$")
 plt.xlabel(r"p$_T$(GeV/c)")
-plt.show()
+plt.show()'''
