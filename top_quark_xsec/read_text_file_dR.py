@@ -105,16 +105,31 @@ def delta_R(eta,phi,m,n):
     
     a=np.abs(phi[m]-phi[n])
     while a > math.pi:
+        a=a-(2*math.pi)
+    b=eta[m]-eta[n]
+    
+    dR=np.sqrt((np.abs(a))**2+(np.abs(b))**2)
+    
+    return [dR,a,b]
+    
+def delta_R_jet(eta1,phi1,eta2,phi2):
+    a=np.abs(phi1-phi2)
+    while a > math.pi:
         a=a-math.pi
     
-    dR=np.sqrt((np.abs(a))**2+(np.abs(eta[m]-eta[n]))**2)
-    
-    return dR
-    
-    
+    dR=np.sqrt((np.abs(a))**2+(np.abs(eta1-eta2))**2)
+    return dR      
     
 
 f = open(sys.argv[1])
+
+
+top_eta_test=[]
+antitop_eta_test=[]
+top_phi_test=[]
+antitop_phi_test=[]
+d_phi=[]
+d_eta=[]
 
 
 
@@ -155,79 +170,147 @@ for collision in collisions:
     for p in gen_particles:
         pdg,status,pt,eta,phi = p
         pdgs.append(pdg)
+        pts.append(pt)
         etas.append(eta)
         phis.append(phi)
         #print "%-5d %8.5f %12.5f %12.5f" % (pdg,pt,eta,phi)
 
     t0=return_top_decays(pdgs)
+###########Sanity Check
+    top_eta_test.append(etas[t0[0][0]])
+    antitop_eta_test.append(etas[t0[1][0]])
 
+    top_phi_test.append(phis[t0[0][0]])
+    antitop_phi_test.append(phis[t0[1][0]])
+    
+    dR_top_antitop=delta_R(etas,phis,t0[0][0],t0[1][0])
+    d_phi.append(dR_top_antitop[1])
+    d_eta.append(dR_top_antitop[2]) 
+    
+    #del_R_top_antitop.append(dR_top_antitop[0])
 
+####################################
+    
+    
     #dR for top quarks
     dR_top_antitop=delta_R(etas,phis,t0[0][0],t0[1][0])
-    del_R_top_antitop.append(dR_top_antitop)
+    del_R_top_antitop.append(dR_top_antitop[0])
     
     #dR for W and b    
     dR_W_B=delta_R(etas,phis,t0[0][1],t0[0][2])
-    del_R_W_B.append(dR_W_B)
+    del_R_W_B.append(dR_W_B[0])
     
     #dR for W- and b-    
     dR_anti_W_B=delta_R(etas,phis,t0[1][1],t0[1][2])
-    del_R_anti_W_B.append(dR_anti_W_B)
+    del_R_anti_W_B.append(dR_anti_W_B[0])
     
     #dR for b and anti b    
     dR_b_anti_b=delta_R(etas,phis,t0[0][2],t0[1][2])
-    del_R_b_anti_b.append(dR_b_anti_b)
+    del_R_b_anti_b.append(dR_b_anti_b[0])
     
     #dR for e or mu and b on other side which is hadronic  
     if abs(pdgs[t0[0][3]])<6 and abs(pdgs[t0[1][3]])>6:
         if pdgs[t0[1][3]]==11 or pdgs[t0[1][3]]==13:
             dR_mu_other_b=delta_R(etas,phis,t0[0][2],t0[1][3])
-            del_R_mu_other_b.append(dR_mu_other_b)            
+            del_R_mu_other_b.append(dR_mu_other_b[0])            
         elif pdgs[t0[1][4]]==11 or pdgs[t0[1][4]]==13:
             dR_mu_other_b=delta_R(etas,phis,t0[0][2],t0[1][4])
-            del_R_mu_other_b.append(dR_mu_other_b) 
+            del_R_mu_other_b.append(dR_mu_other_b[0]) 
             
     if abs(pdgs[t0[0][3]])>6 and abs(pdgs[t0[1][3]])<6:
         if pdgs[t0[0][3]]==-11 or pdgs[t0[0][3]]==-13:
             dR_mu_other_b=delta_R(etas,phis,t0[1][2],t0[0][3])
-            del_R_mu_other_b.append(dR_mu_other_b)            
+            del_R_mu_other_b.append(dR_mu_other_b[0])            
         elif pdgs[t0[1][4]]==11 or pdgs[t0[1][4]]==13:
             dR_mu_other_b=delta_R(etas,phis,t0[1][2],t0[0][4])
-            del_R_mu_other_b.append(dR_mu_other_b)        
+            del_R_mu_other_b.append(dR_mu_other_b[0])        
 
 
     #dR for e or mu and b on other side which is hadronic  
     if abs(pdgs[t0[0][3]])<6 and abs(pdgs[t0[1][3]])>6:
         if pdgs[t0[1][3]]==11 or pdgs[t0[1][3]]==13:
             dR_mu_b=delta_R(etas,phis,t0[1][2],t0[1][3])
-            del_R_mu_b.append(dR_mu_b)            
+            del_R_mu_b.append(dR_mu_b[0])            
         elif pdgs[t0[1][4]]==11 or pdgs[t0[1][4]]==13:
             dR_mu_b=delta_R(etas,phis,t0[1][2],t0[1][4])
-            del_R_mu_b.append(dR_mu_b) 
+            del_R_mu_b.append(dR_mu_b[0]) 
             
     if abs(pdgs[t0[0][3]])>6 and abs(pdgs[t0[1][3]])<6:
         if pdgs[t0[0][3]]==-11 or pdgs[t0[0][3]]==-13:
             dR_mu_b=delta_R(etas,phis,t0[0][2],t0[0][3])
-            del_R_mu_b.append(dR_mu_b)            
+            del_R_mu_b.append(dR_mu_b[0])            
         elif pdgs[t0[1][4]]==11 or pdgs[t0[1][4]]==13:
             dR_mu_b=delta_R(etas,phis,t0[0][2],t0[0][4])
-            del_R_mu_b.append(dR_mu_b)        
+            del_R_mu_b.append(dR_mu_b[0])        
 
 
 
 
 
     
-    ######################################### Delta R
+    ######################################### Top Jets
     
-    #print "-------"
-    #for p in ca8jets:
-     #   mass,pt,eta,phi = p
-      #  jet_pt.append(pt)
-       # jet_eta.append(eta)
-        #jet_phi.append(phi)
-        #print "%8.5f %8.5f %12.5f %12.5f" % (mass,pt,eta,phi)
     
+    '''top_pt=[]
+    del_r=[]
+    found=False
+    founda=False
+    foundr=False
+    foundra=False
+    
+    #if abs(pdgs[t0[0][3]])<6 and abs(pdgs[t0[1][3]])<6:        
+        #print "******************"
+    
+    if abs(pdgs[t0[0][3]])<6 or abs(pdgs[t0[1][3]])<6:
+
+        print "-------"
+        for p in ca8jets:
+           mass,pt,eta,phi = p
+           jet_pt.append(pt)
+           jet_eta.append(eta)
+           jet_phi.append(phi)
+           #print "%8.5f %8.5f %12.5f %12.5f" % (mass,pt,eta,phi)
+        #print len(jet_pt)
+        if abs(pdgs[t0[0][3]])<6:
+            for i in range (16):
+                difference=abs(pts[t0[0][0]]-jet_pt[i])
+                top_pt.append(difference)
+                del_r.append(delta_R_jet(jet_eta[i],jet_phi[i],etas[t0[0][0]],phis[t0[0][0]]))
+
+                
+            minimal_pt=min(top_pt)
+            minimal_dR=min(del_r)
+            i=0
+            if top_pt[i]!=minimal_pt and found==False:
+               i=i+1
+            elif top_pt[i]==minimal_pt:
+                found=True
+            j=0
+            if del_r[j]!=minimal_dR and foundr==False:
+               j=j+1
+            elif del_r[j]==minimal_dR:
+                foundr=True
+            
+            print pts[t0[0][0]]
+            print jet_pt[i]
+            print minimal_dR
+            print i
+            print j
+        if abs(pdgs[t0[1][3]])<6:
+            for i in range (16):
+                difference=abs(pts[t0[1][0]]-jet_pt[i])
+                top_pt.append(difference)
+                
+            minimal_pt=min(top_pt)
+            i=0
+            if top_pt[i]!=minimal_pt and founda==False:
+               i=i+1
+            elif top_pt[i]==minimal_pt:
+                founda=True
+            
+            print pts[t0[0][0]]
+            print jet_pt[i]
+            print i '''   
     
     
     
@@ -301,6 +384,55 @@ lkn.hist_err(del_R_mu_b,bins=100,range=(0,8))
 #plt.axis([0, 8, 0, 8])
 plt.title(r"e/mu and same side b $\Delta$R")
 plt.xlabel(r"$\Delta$R")
+
+
+plt.figure(5)
+plt.subplot(2, 1, 1)
+#plt.hist(del_R_mu_other_b,bins=50)
+lkn.hist_err(top_phi_test,bins=100,range=(-8,8))
+#plt.axis([0, 8, 0, 8])
+plt.title("Top")
+plt.xlabel("Phi")
+
+plt.subplot(2, 1, 2)
+#plt.hist(del_R_mu_b,bins=50)
+lkn.hist_err(top_eta_test,bins=100,range=(-8,8))
+#plt.axis([0, 8, 0, 8])
+#plt.title(r"e/mu and same side b $\Delta$R")
+plt.xlabel("Eta")
+
+plt.figure(6)
+plt.subplot(2, 1, 1)
+#plt.hist(del_R_mu_other_b,bins=50)
+lkn.hist_err(antitop_phi_test,bins=100,range=(-8,8))
+#plt.axis([0, 8, 0, 8])
+plt.title("AntiTop")
+plt.xlabel("Phi")
+
+plt.subplot(2, 1, 2)
+#plt.hist(del_R_mu_b,bins=50)
+lkn.hist_err(antitop_eta_test,bins=100,range=(-8,8))
+plt.xlabel("Eta")
+
+
+plt.figure(7)
+plt.subplot(2, 1, 1)
+#plt.hist(del_R_mu_other_b,bins=50)
+lkn.hist_err(d_phi,bins=100,range=(-8,8))
+#plt.axis([0, 8, 0, 8])
+plt.title(r"$\delta$ $\phi$")
+#plt.xlabel("Phi")
+
+plt.subplot(2, 1, 2)
+#plt.hist(del_R_mu_b,bins=50)
+lkn.hist_err(d_eta,bins=100,range=(-8,8))
+plt.title(r"$\delta$ $\eta$")
+
+
+
+
+
+
 
 
 plt.show()
