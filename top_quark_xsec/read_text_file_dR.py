@@ -447,14 +447,14 @@ plt.title(r"$\delta$ $\eta$")'''
 plt.figure(8)
 plt.subplot(2, 1, 1)
 #plt.hist(del_R_mu_other_b,bins=50)
-lkn.hist_err(minimal_dR,bins=100,range=(-8,8))
+lkn.hist_err(minimal_dR,bins=100)
 #plt.axis([0, 8, 0, 8])
 plt.title("Top and Antitop")
 plt.xlabel(r"Abs($\delta$R)")
 
 plt.subplot(2, 1, 2)
 #plt.hist(del_R_mu_b,bins=50)
-lkn.hist_err(minimal_pt,bins=100,range=(-8,8))
+lkn.hist_err(minimal_pt,bins=100)
 plt.xlabel("Abs(pt)")
 
 
