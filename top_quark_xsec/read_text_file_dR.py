@@ -255,16 +255,8 @@ for collision in collisions:
     
     ######################################### Top Jets
     
+
     
-    top_pt=[]
-    del_r=[]
-    found=False
-    founda=False
-    foundr=False
-    foundra=False
-    
-    #if abs(pdgs[t0[0][3]])<6 and abs(pdgs[t0[1][3]])<6:        
-        #print "******************"
     
     if abs(pdgs[t0[0][3]])<6 or abs(pdgs[t0[1][3]])<6:
 
@@ -275,55 +267,7 @@ for collision in collisions:
            jet_eta.append(eta)
            jet_phi.append(phi)
            #print "%8.5f %8.5f %12.5f %12.5f" % (mass,pt,eta,phi)
-        #print len(jet_pt)
-        if abs(pdgs[t0[0][3]])<6:
-            for i in range (16):
-                #difference=abs(pts[t0[0][0]]-jet_pt[i])
-                #top_pt.append(difference)
-                del_r.append(delta_R_jet(jet_eta[i],jet_phi[i],etas[t0[0][0]],phis[t0[0][0]]))
-
-                
-            #minimal_pt=min(top_pt)
-            min_dR=(min(del_r))
-            #i=0
-            #if top_pt[i]!=minimal_pt and found==False:
-               #i=i+1
-            #elif top_pt[i]==minimal_pt:
-                #found=True
-            j=0
-            if del_r[j]!=min_dR and foundr==False:
-               j=j+1
-            elif del_r[j]==min_dR:
-                foundr=True
-            
-            minimal_pt.append(abs(jet_pt[j]-pts[t0[0][0]]))
-            minimal_dR.append(min(del_r))
-
-
-            
-        if abs(pdgs[t0[1][3]])<6:
-            for i in range (16):
-                #difference=abs(pts[t0[1][0]]-jet_pt[i])
-                #top_pt.append(difference)
-                del_r.append(delta_R_jet(jet_eta[i],jet_phi[i],etas[t0[1][0]],phis[t0[1][0]]))
-
-                
-            #minimal_pt=min(top_pt)
-            min_dR=min(del_r)
-            #i=0
-            #if top_pt[i]!=minimal_pt and found==False:
-               #i=i+1
-            #elif top_pt[i]==minimal_pt:
-                #found=True
-            j=0
-            if del_r[j]!=min_dR and foundr==False:
-               j=j+1
-            elif del_r[j]==min_dR:
-                foundr=True
-            
-            minimal_dR.append(min(del_r))            
-            minimal_pt.append(abs(jet_pt[j]-pts[t0[1][0]]))
-            
+          
 
     
     
@@ -444,18 +388,6 @@ plt.title(r"$\delta$ $\eta$")'''
 #####################################
 
 
-plt.figure(8)
-plt.subplot(2, 1, 1)
-#plt.hist(del_R_mu_other_b,bins=50)
-lkn.hist_err(minimal_dR,bins=100)
-#plt.axis([0, 8, 0, 8])
-plt.title("Top and Antitop")
-plt.xlabel(r"Abs($\delta$R)")
-
-plt.subplot(2, 1, 2)
-#plt.hist(del_R_mu_b,bins=50)
-lkn.hist_err(minimal_pt,bins=100)
-plt.xlabel("Abs(pt)")
 
 
 
