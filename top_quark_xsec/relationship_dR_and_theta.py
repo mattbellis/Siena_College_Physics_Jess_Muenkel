@@ -31,22 +31,11 @@ def delta_theta(pt1,eta1,phi1,pt2,eta2,phi2):
 f = open(sys.argv[1])
 
 
-top_eta_test=[]
-antitop_eta_test=[]
-top_phi_test=[]
-antitop_phi_test=[]
-d_phi=[]
-d_eta=[]
-
-
 
 del_Theta=[]
 del_R_mu_b=[]
 
 
-
-minimal_dR=[]
-minimal_pt=[]
 
 
 
@@ -60,13 +49,7 @@ for collision in collisions:
 
     gen_particles,ak5jets,ca8jets = hep.get_truth_particles_from_collision(collision)
 
-    #print gen_particles
-    #print ak5jets
-    #print ca8jets
 
-    #exit()
-
-    #print "--------------------------"
     pdgs=[]
     pts=[]
     etas=[]
@@ -81,30 +64,14 @@ for collision in collisions:
         pts.append(pt)
         etas.append(eta)
         phis.append(phi)
-        #print "%-5d %8.5f %12.5f %12.5f" % (pdg,pt,eta,phi)
+
 
     t0=d_tools.return_top_decays(pdgs)
 
-    
-    '''#dR for e or mu and b on other side which is hadronic  
-    if abs(pdgs[t0[0][3]])<6 and abs(pdgs[t0[1][3]])>6:
-        if pdgs[t0[1][3]]==11 or pdgs[t0[1][3]]==13:
-            dR_mu_other_b=d_tools.delta_R(etas,phis,t0[0][2],t0[1][3])
-            del_R_mu_other_b.append(dR_mu_other_b[0])            
-        elif pdgs[t0[1][4]]==11 or pdgs[t0[1][4]]==13:
-            dR_mu_other_b=d_tools.delta_R(etas,phis,t0[0][2],t0[1][4])
-            del_R_mu_other_b.append(dR_mu_other_b[0]) 
-            
-    if abs(pdgs[t0[0][3]])>6 and abs(pdgs[t0[1][3]])<6:
-        if pdgs[t0[0][3]]==-11 or pdgs[t0[0][3]]==-13:
-            dR_mu_other_b=d_tools.delta_R(etas,phis,t0[1][2],t0[0][3])
-            del_R_mu_other_b.append(dR_mu_other_b[0])            
-        elif pdgs[t0[1][4]]==11 or pdgs[t0[1][4]]==13:
-            dR_mu_other_b=d_tools.delta_R(etas,phis,t0[1][2],t0[0][4])
-            del_R_mu_other_b.append(dR_mu_other_b[0])'''        
+       
 
 
-    #dR and dTheta for e or mu and b on same side which is hadronic  
+    #dR and dTheta for e or mu and b on same side   
     if abs(pdgs[t0[0][3]])<6 and abs(pdgs[t0[1][3]])>6:
         if pdgs[t0[1][3]]==11 or pdgs[t0[1][3]]==13:
             dR_mu_b=d_tools.delta_R(etas,phis,t0[1][2],t0[1][3])
@@ -136,30 +103,6 @@ for collision in collisions:
 
 
 
-
-
-
-
-
-
-
-
-
-'''
-plt.figure(1)
-plt.subplot(2, 1, 1)
-#plt.hist(del_R_mu_other_b,bins=50)
-lkn.hist_err(del_R_mu_other_b,bins=100,range=(0,8))
-plt.axis([0, 8, 0, 8])
-plt.title(r"e/mu and opposite b $\Delta$R")
-#plt.xlabel(r"$\Delta$R")
-
-plt.subplot(2, 1, 2)
-#plt.hist(del_R_mu_b,bins=50)
-lkn.hist_err(del_R_mu_b,bins=100,range=(0,8))
-plt.axis([0, 8, 0, 8])
-plt.title(r"e/mu and same side b $\Delta$R")
-plt.xlabel(r"$\Delta$R")'''
 
 #####################################
 plt.figure(2)
