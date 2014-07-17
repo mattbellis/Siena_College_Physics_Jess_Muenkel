@@ -147,10 +147,14 @@ for collision in collisions:
 
 plt.figure(1)
 #plt.hist(del_R_top_antitop,bins=50)
-lkn.hist_err(del_R_top_antitop,bins=100,range=(0,8))
+nbins=100; lorange=0; hirange=8
+binwidth = (hirange-lorange)/float(nbins)
+lkn.hist_err(del_R_top_antitop,bins=nbins,range=(lorange,hirange))
 #plt.axis([0, 8, 0, 8])
-plt.title(r"Top and Antitop $\Delta$R")
-plt.xlabel(r"$\Delta$R")
+plt.title(r" $\Delta R$ between $t$ and $\bar{t}$",fontsize=24)
+plt.xlabel(r"$\Delta$R",fontsize=24)
+label = r"Entries/%3.2f" % (binwidth)
+plt.ylabel(label,fontsize=24)
 
 plt.figure(2)
 plt.subplot(2, 1, 1)
