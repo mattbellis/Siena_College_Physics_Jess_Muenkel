@@ -109,9 +109,5 @@ plt.figure(2)
 plt.plot(del_Theta,del_R_mu_b,'.')
 
 
-
-
-
-
 plt.show()
 
