@@ -35,8 +35,10 @@ for collision in collisions:
     phis=[]
     muon_pt=[]
     output = ""
+    top_pt=0
     top_eta=0
     top_phi=0
+    muon_pt=0
     muon_eta=0
     muon_phi=0
     del_r=[]
@@ -50,45 +52,51 @@ for collision in collisions:
 
 
     t0=d_tools.return_top_decays(pdgs)
-    if pdgs[t0[0][3]]==13 or pdgs[t0[0][3]]==-13 or pdgs[t0[0][4]]==13 or pdgs[t0[0][4]]==-13 or pdgs[t0[1][3]]==13 or pdgs[t0[1][3]]==-13 or pdgs[t0[1][4]]==13 or pdgs[t0[1][4]]==-13:
-        max_top_pt=max(pts[t0[0][0]],pts[t0[1][0]])
-        output += "%f " % (max_top_pt)
-        if pts[t0[0][0]]>pts[t0[1][0]]:
-            top_eta=etas[t0[0][0]]
-            top_phi=phis[t0[0][0]]
-        else:
-            top_eta=etas[t0[1][0]]
-            top_phi=phis[t0[1][0]]
     
-    if pdgs[t0[0][3]]==13 or pdgs[t0[0][3]]==-13:
-        muon_pt.append(pts[t0[0][3]])
-    if pdgs[t0[0][4]]==13 or pdgs[t0[0][4]]==-13:
-        muon_pt.append(pts[t0[0][4]])
-    if pdgs[t0[1][3]]==13 or pdgs[t0[1][3]]==-13:
-        muon_pt.append(pts[t0[1][3]])
-    if pdgs[t0[1][4]]==13 or pdgs[t0[1][4]]==-13:
-        muon_pt.append(pts[t0[1][4]])
+    if abs(pdgs[t0[0][3]])==13 or abs(pdgs[t0[0][4]])==13 or abs(pdgs[t0[1][3]])==13 or abs(pdgs[t0[1][4]])==13:
+        if abs(pdgs[t0[0][3]])<7 or abs(pdgs[t0[0][4]])<7 or abs(pdgs[t0[1][3]])<7 or abs(pdgs[t0[1][4]])<7:
+            ###Find Top that decays hadronicly when other side decays to muon
+            if abs(pdgs[t0[0][3]])<7 or abs(pdgs[t0[0][4]])<7:
+                top_pt=pts[t0[0][0]]
+                top_eta=etas[t0[0][0]]
+                top_phi-phis[t0[0][0]]
+                
+            elif abs(pdgs[t0[1][3]])<7 or abs(pdgs[t0[1][4]])<7:
+                top_pt=pts[t0[1][0]]
+                top_eta=etas[t0[1][0]]
+                top_phi-phis[t0[1][0]]                
+                
 
-    if len(muon_pt)>0:
-        
-        max_muon_pt=max(muon_pt)
-        i=0
-
-        while pts[i]!=max_muon_pt:
-            i=i+1
-        
-        muon_eta=etas[i]
-        muon_phi=phis[i]
+            output += "%f " % (top_pt)
             
-        output += "%f " % (max_muon_pt)
+            if abs(pdgs[t0[0][3]])==13:
+                muon_pt=pts[t0[0][3]]
+                muon_eta=etas[t0[0][3]]
+                muon_phi=phis[t0[0][3]]
+            elif abs(pdgs[t0[0][4]])==13:
+                muon_pt=pts[t0[0][4]]
+                muon_eta=etas[t0[0][4]]
+                muon_phi=phis[t0[0][4]]            
+            elif abs(pdgs[t0[1][3]])==13:
+                muon_pt=pts[t0[1][3]]
+                muon_eta=etas[t0[1][3]]
+                muon_phi=phis[t0[1][3]]            
+            elif abs(pdgs[t0[1][4]])==13:
+                muon_pt=pts[t0[1][4]]
+                muon_eta=etas[t0[1][4]]
+                muon_phi=phis[t0[1][4]]            
+            
+            
+            
+            output += "%f " % (muon_pt)
         
-        del_r=d_tools.delta_R_jet(top_eta,top_phi,muon_eta,muon_phi)
+            del_r=d_tools.delta_R_jet(top_eta,top_phi,muon_eta,muon_phi)
 
-        output += "%f " % (del_r)
+            output += "%f " % (del_r)
         
-        output+= "\n"
+            output+= "\n"
     
-        file.write(output)
+            file.write(output)
     
 file.close()
 
