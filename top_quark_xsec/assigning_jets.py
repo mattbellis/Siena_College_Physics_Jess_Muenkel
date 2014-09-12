@@ -18,6 +18,8 @@ f = open(sys.argv[1])
 
 minimal_dR=[]
 minimal_pt=[]
+pt_jet=[]
+pt_top=[]
 
 
 
@@ -68,7 +70,7 @@ for collision in collisions:
     foundra=False
     
 
-############################Matching he top and anti top jets
+############################Matching the top and anti top jets
     if abs(pdgs[t0[0][3]])<6 or abs(pdgs[t0[1][3]])<6:
 
         #print "-------"
@@ -95,6 +97,8 @@ for collision in collisions:
             
             minimal_pt.append(abs(jet_pt[j]-pts[t0[0][0]]))
             minimal_dR.append(min(del_r))
+            pt_jet.append(abs(jet_pt[j]))
+            pt_top.append(abs(pts[t0[0][0]]))
 
 
             
@@ -112,7 +116,8 @@ for collision in collisions:
             
             minimal_dR.append(min(del_r_anti))            
             minimal_pt.append(abs(jet_pt[j]-pts[t0[1][0]]))
-            
+            pt_jet.append(abs(jet_pt[j]))
+            pt_top.append(abs(pts[t0[1][0]]))            
 
     
     
@@ -149,7 +154,7 @@ for collision in collisions:
 
 
 
-plt.figure(1)
+'''plt.figure(1)
 plt.subplot(2, 1, 1)
 #plt.hist(del_R_mu_other_b,bins=50)
 lkn.hist_err(minimal_dR,bins=100)
@@ -159,7 +164,7 @@ plt.xlabel(r"Abs($\delta$R)")
 plt.subplot(2, 1, 2)
 #plt.hist(del_R_mu_b,bins=50)
 lkn.hist_err(minimal_pt,bins=100)
-plt.xlabel("Abs(pt)")
+plt.xlabel("Abs(pt)")'''
 
 
 '''plt.figure(2)
@@ -174,6 +179,19 @@ plt.subplot(2, 1, 2)
 lkn.hist_err(minimal_pt,bins=100)
 plt.xlabel("Abs(pt)")'''
 
+plt.figure(3)
 
+#plt.hist(del_R_mu_other_b,bins=50)
+lkn.hist_err(minimal_dR,bins=100)
+plt.title("Top and Antitop")
+plt.xlabel(r"Abs($\delta$R)")
+
+
+plt.figure(4)
+#plt.hist(del_R_mu_b,bins=50)
+lkn.hist_err(minimal_pt,bins=100)
+plt.xlabel("Abs(pt)")
 
 plt.show()
+
+#python2.7-32 assigning_jets.py small_file.txt

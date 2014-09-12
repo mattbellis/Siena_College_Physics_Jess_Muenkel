@@ -71,10 +71,10 @@ plt.figure(1)
 lkn.hist_err(top_pt,bins=50)
 plt.title("Top and Antitop Pt")
 
-plt.figure(2)
+'''plt.figure(2)
 #plt.hist(W_pt,bins=50)
 lkn.hist_err(W_pt,bins=50)
-plt.title("W and Anti_W Pt")
+plt.title("W and Anti_W Pt")'''
 
 plt.figure(3)
 #plt.hist(bottom_pt,bins=50)
