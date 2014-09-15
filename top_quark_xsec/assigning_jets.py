@@ -182,15 +182,18 @@ plt.xlabel("Abs(pt)")'''
 plt.figure(3)
 
 #plt.hist(del_R_mu_other_b,bins=50)
-lkn.hist_err(minimal_dR,bins=100)
-plt.title("Top and Antitop")
-plt.xlabel(r"Abs($\delta$R)")
+lkn.hist_2D(minimal_dR,pt_jet,xbins=80,ybins=80,xrange=(-3,3), yrange=(0,200))
+plt.title(r"$Jet$ $vs$ $\delta$$R$")
+plt.xlabel(r"$Abs($$\delta$R)")
+plt.ylabel(r"$Jet$ $p$$_t$")
 
 
 plt.figure(4)
 #plt.hist(del_R_mu_b,bins=50)
-lkn.hist_err(minimal_pt,bins=100)
-plt.xlabel("Abs(pt)")
+lkn.hist_2D(minimal_dR,pt_top,xbins=80,ybins=80,xrange=(-3,3), yrange=(0,200))
+plt.title(r"$t$ $\bar{t}$ $vs$ $\delta$$R$")
+plt.xlabel(r"$Abs($$\delta$$R)$")
+plt.ylabel(r"$t$ $\bar{t}$ $p$$_t$")
 
 plt.show()
 

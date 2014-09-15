@@ -29,7 +29,7 @@ for collision in collisions:
 
     gen_particles,ak5jets,ca8jets = hep.get_truth_particles_from_collision(collision)
     
-    print "--------------------------"
+    #print "--------------------------"
 
 
     pdgs=[]
@@ -50,7 +50,7 @@ for collision in collisions:
             if pdg==13:
                 anti_muon=True
                 muon_pt.append(pt)
-        print "%-5d %-5d %8.5f" % (pdg,status,pt)
+        #print "%-5d %-5d %8.5f" % (pdg,status,pt)
         
            
     t0=d_tools.return_top_decays(pdgs)
@@ -69,7 +69,7 @@ for collision in collisions:
 plt.figure(1)
 #plt.hist(top_pt,bins=50)
 lkn.hist_err(top_pt,bins=50)
-plt.title("Top and Antitop Pt")
+plt.title(r"$t$ $\bar{t}$ $p$$_t$")
 
 '''plt.figure(2)
 #plt.hist(W_pt,bins=50)
@@ -79,13 +79,13 @@ plt.title("W and Anti_W Pt")'''
 plt.figure(3)
 #plt.hist(bottom_pt,bins=50)
 lkn.hist_err(bottom_pt,bins=50)
-plt.title("B and Anti_b Pt")
+plt.title(r"$b$ $\bar{b}$ $p$$_t$")
 
 
 plt.figure (4)
 #plt.hist(muon_pt,bins=50)
 lkn.hist_err(muon_pt,bins=50)
-plt.title("Muon Pt")
+plt.title(r"$Muon$ $p$$_t$")
 plt.show()
 
 
