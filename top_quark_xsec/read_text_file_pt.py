@@ -68,7 +68,7 @@ for collision in collisions:
 
 plt.figure(1)
 #plt.hist(top_pt,bins=50)
-lkn.hist_err(top_pt,bins=50)
+lkn.hist_err(top_pt,bins=50, range=[400,600])
 plt.title(r"$t$ $\bar{t}$ $p$$_t$")
 
 '''plt.figure(2)
