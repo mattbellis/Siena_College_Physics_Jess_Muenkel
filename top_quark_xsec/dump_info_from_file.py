@@ -44,12 +44,14 @@ truth_str.append("floats_pfShyftTupleGenParticles_pt_ANA.obj")
 truth_str.append("floats_pfShyftTupleGenParticles_eta_ANA.obj")
 truth_str.append("floats_pfShyftTupleGenParticles_phi_ANA.obj")
 
+# Not top jets
 ak5jet_str = []
 ak5jet_str.append("floats_pfShyftTupleAK5GenJets_mass_ANA.obj")
 ak5jet_str.append("floats_pfShyftTupleAK5GenJets_pt_ANA.obj")
 ak5jet_str.append("floats_pfShyftTupleAK5GenJets_eta_ANA.obj")
 ak5jet_str.append("floats_pfShyftTupleAK5GenJets_phi_ANA.obj")
 
+# Top jets
 ca8jet_str = []
 ca8jet_str.append("floats_pfShyftTupleCA8GenJets_mass_ANA.obj")
 ca8jet_str.append("floats_pfShyftTupleCA8GenJets_pt_ANA.obj")
