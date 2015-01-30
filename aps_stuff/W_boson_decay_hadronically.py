@@ -39,13 +39,13 @@ for collision in collisions:
 plt.figure(1)
 
 
-plt.hist(invarient_mass,bins=200,range=(0,400))
+plt.hist(invarient_mass,bins=150,range=(0,400))
 #lkn.hist_err(invarent_mass,bins=200)
 plt.xlim([0,400])
-name = r"$Hadronic$ $Decay$ $of$ $W$ $%s$" % (sys.argv[1].split('/')[-1])
+name = r"Hadronic Decay of W $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
-plt.ylabel(r"$Frequency$")
-plt.xlabel(r"$Invariant$ $Mass$")
+plt.ylabel(r"Frequency")
+plt.xlabel(r"Invariant Mass")
 
 plt.show()
 
