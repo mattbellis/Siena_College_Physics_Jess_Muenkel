@@ -7,12 +7,12 @@ import lichen.lichen as lkn
 
 
 
-f = open(sys.argv[1])
+#f = open(sys.argv[1])
 
 cool_collisions=[]
 
-collisions = cms.get_collisions(f)
-
+#collisions = cms.get_collisions_from_file_name(sys.argv[1])
+collisions = cms.get_collisions(sys.argv[1])
 print "Number of collisions:"
 print len(collisions)
 
@@ -73,8 +73,8 @@ for collision in collisions:
 
     b_tag=[]
     for i in range(0,len(jets)):
-        if jet[i][4]>0:
-            b_tag.append(jet[i][4])
+        if jets[i][4]>0:
+            b_tag.append(jets[i][4])
             
     output += "%d " % (len(b_tag))
 
@@ -82,7 +82,10 @@ for collision in collisions:
     #### b-tag jet value for highest b-tag jet value
     ##################################################################    
 
-    output += "%f " % (max(b_tag))
+    if len(b_tag)==0: 
+        output += "%f " % (-999)
+    else:
+        output += "%f " % (max(b_tag))
 
     ##################################################################
     #### pt of highest pt b-tag jet (-999 if no b-tag jet)
@@ -90,13 +93,13 @@ for collision in collisions:
 
     b_tag_pt=[]
     for i in range(0,len(jets)):
-        if jet[i][4]>0:
-            pt=math.sqrt(jet[i][1]**2+jet[i][2]**2+jet[i][3]**2)
+        if jets[i][4]>0:
+            pt=math.sqrt(jets[i][1]**2+jets[i][2]**2+jets[i][3]**2)
             b_tag_pt.append(pt)
     if len(b_tag_pt)==0: 
         output += "%f " % (-999)
     else:
-        output += "%f " % (max(b_tag_jet))
+        output += "%f " % (max(b_tag_pt))
 
     ##################################################################
     #### pt of highest pt non b-tag jet
@@ -104,25 +107,39 @@ for collision in collisions:
 
     non_b_tag_pt=[]
     for i in range(0,len(jets)):
-        if jet[i][4]<0:
-            pt=math.sqrt(jet[i][1]**2+jet[i][2]**2+jet[i][3]**2)
+        if jets[i][4]<0:
+            pt=math.sqrt(jets[i][1]**2+jets[i][2]**2+jets[i][3]**2)
             non_b_tag_pt.append(pt)
-
-    output += "%f " % (max(non_b_tag_pt))
+    if len(non_b_tag_pt)==0: 
+        output += "%f " % (-999)
+    else:
+        output += "%f " % (max(non_b_tag_pt))
 
     ##################################################################
     #### pt of highest pt muon
     ##################################################################    
     muon_pt=[]
-    for i in range(0,len(muon)):
-        pt=math.sqrt(muon[i][1]**2+muon[i][2]**2+muon[i][3]**2)
+    for i in range(0,len(muons)):
+        pt=math.sqrt(muons[i][1]**2+muons[i][2]**2+muons[i][3]**2)
         muon_pt.append(pt)
-    output += "%f " % (max(muon_pt))
+
+    if len(muon_pt)==0: 
+        output += "%f " % (-999)
+    else:
+        output += "%f " % (max(muon_pt))
 
     ##################################################################
     #### biggest dR for any pt muon and any jet
     ##################################################################    
+    #px=ptcos(phi)
+    #py=ptsin(phi)
+    #pz=ptsinh(eta)
+    #
+    #pt=sqrt(px**2+py**2)
 
+    #
+    #
+    #
 
 
 
@@ -143,13 +160,6 @@ for collision in collisions:
 
 outfile.close()
 
-
-#    njets = len(jets)
-#    if njets>=2:
-#        for i in range(0,njets):
-#            for j in range(i+1,njets):
-
-                
 
            
 
