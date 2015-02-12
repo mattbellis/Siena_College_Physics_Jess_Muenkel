@@ -16,9 +16,16 @@ collisions = cms.get_collisions(f)
 print "Number of collisions:"
 print len(collisions)
 
+outfilename = "default.out"
+if (len(sys.argv)>2):
+    outfilename = sys.argv[2]
+
+outfile = open(outfilename,'w')
 
 
 for collision in collisions:
+
+    output = ""
 
     jets,topjets,muons,electrons,photons,met = collision
     cms.pretty_print(collision)
@@ -28,37 +35,37 @@ for collision in collisions:
     ##################################################################      
 
     if "ttbar" in sys.argv[1].split('/')[-1]:
-        cool_collisions.append(0)
+        output += "0 "
     elif"wjets" in sys.argv[1].split('/')[-1]:
-        cool_collisions.append(1)
+        output += "1 "
     elif"zz" in sys.argv[1].split('/')[-1]:
-        cool_collisions.append(2)
+        output += "2 "
     elif"ww" in sys.argv[1].split('/')[-1]:
-        cool_collisions.append(3)
+        output += "3 "
     elif"wz" in sys.argv[1].split('/')[-1]:
-        cool_collisions.append(4)
+        output += "4 "
     elif"dy" in sys.argv[1].split('/')[-1]:
-        cool_collisions.append(5)
+        output += "5 "
     elif"qcd" in sys.argv[1].split('/')[-1]:
-        cool_collisions.append(6)
+        output += "6 "
 
     ##################################################################
     #### Number of jets
     ##################################################################    
 
-    cool_collisions.append(len(jets))
+    output += "%d " % (len(jets))
 
     ##################################################################
     #### Number of muons
     ##################################################################    
 
-    cool_collisions.append(len(muons))
+    output += "%d " % (len(muons))
 
     ##################################################################
     #### Number of electrons
     ##################################################################    
 
-    cool_collisions.append(len(electrons))
+    output += "%d " % (len(electrons))
 
     ##################################################################
     #### Number of b-tag jets
@@ -69,13 +76,13 @@ for collision in collisions:
         if jet[i][4]>0:
             b_tag.append(jet[i][4])
             
-    cool_collisions.append(len(b_tag))
+    output += "%d " % (len(b_tag))
 
     ##################################################################
     #### b-tag jet value for highest b-tag jet value
     ##################################################################    
 
-    cool_collisions.append(max(b_tag))
+    output += "%f " % (max(b_tag))
 
     ##################################################################
     #### pt of highest pt b-tag jet (-999 if no b-tag jet)
@@ -87,9 +94,9 @@ for collision in collisions:
             pt=math.sqrt(jet[i][1]**2+jet[i][2]**2+jet[i][3]**2)
             b_tag_pt.append(pt)
     if len(b_tag_pt)==0: 
-        cool_collisions.append(-999)
+        output += "%f " % (-999)
     else:
-        cool_collisions.append(max(b_tag_jet))
+        output += "%f " % (max(b_tag_jet))
 
     ##################################################################
     #### pt of highest pt non b-tag jet
@@ -101,7 +108,7 @@ for collision in collisions:
             pt=math.sqrt(jet[i][1]**2+jet[i][2]**2+jet[i][3]**2)
             non_b_tag_pt.append(pt)
 
-    cool_collisions.append(max(non_b_tag_pt))
+    output += "%f " % (max(non_b_tag_pt))
 
     ##################################################################
     #### pt of highest pt muon
@@ -110,7 +117,7 @@ for collision in collisions:
     for i in range(0,len(muon)):
         pt=math.sqrt(muon[i][1]**2+muon[i][2]**2+muon[i][3]**2)
         muon_pt.append(pt)
-    cool_collisions.append(max(muon_pt))
+    output += "%f " % (max(muon_pt))
 
     ##################################################################
     #### biggest dR for any pt muon and any jet
@@ -128,6 +135,13 @@ for collision in collisions:
 
 
 
+    # When you're finished filling the output string
+    output += "\n"
+
+    outfile.write(output)
+
+
+outfile.close()
 
 
 #    njets = len(jets)
