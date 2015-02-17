@@ -136,10 +136,30 @@ for collision in collisions:
     #pz=ptsinh(eta)
     #
     #pt=sqrt(px**2+py**2)
-
-    #
-    #
-    #
+    
+    dR_list=[]
+    
+    if len(muons)>0 and len(jets)>0:
+        for i in range(0,len(muons)):
+            pt_muon=math.sqrt(muons[i][1]**2+muons[i][2]**2)
+            muon_phi=math.acos(muons[i][1]/pt_muon)
+            muon_eta=math.asinh(muons[i][3]/pt_muon)
+            for j in range(0,len(jets)):
+                pt_jet=math.sqrt(jets[j][1]**2+jets[j][2]**2)
+                jet_phi=math.acos(jets[j][1]/pt_jet)
+                jet_eta=math.asinh(jets[j][3]/pt_jet)
+                
+                a=np.abs(muon_phi-jet_phi)
+                while a > math.pi:
+                    a=a-math.pi
+                
+                dR=np.sqrt((np.abs(a))**2+(np.abs(muon_eta-jet_eta))**2)
+                dR_list.append(dR)
+                
+    if len(dR_list)==0: 
+        output += "%f " % (-999)
+    else:
+        output += "%f " % (max(dR_list))    
 
 
 
@@ -147,7 +167,35 @@ for collision in collisions:
     #### biggest dR for highest pt muon and any jet
     ##################################################################    
 
+    high_muon_pt=[]
+    dR_high_muon=[]
+    for i in range(0,len(muons)):
+        pt=math.sqrt(muons[i][1]**2+muons[i][2]**2+muons[i][3]**2)
+        high_muon_pt.append(pt)
 
+    if len(high_muon_pt)==0 or len(jets)==0: 
+        output += "%f " % (-999)
+    else:
+        k=high_muon_pt.index(max(high_muon_pt))
+        
+        pt_muon=math.sqrt(muons[k][1]**2+muons[k][2]**2)
+        muon_phi=math.acos(muons[k][1]/pt_muon)
+        muon_eta=math.asinh(muons[k][3]/pt_muon)
+            
+        for j in range(0,len(jets)):
+            pt_jet=math.sqrt(jets[j][1]**2+jets[j][2]**2)
+            jet_phi=math.acos(jets[j][1]/pt_jet)
+            jet_eta=math.asinh(jets[j][3]/pt_jet)
+            
+            a=np.abs(muon_phi-jet_phi)
+            while a > math.pi:
+                a=a-math.pi
+                
+            dR=np.sqrt((np.abs(a))**2+(np.abs(muon_eta-jet_eta))**2)
+            dR_high_muon.append(dR)
+        
+        
+        output += "%f " % (max(dR_high_muon))
 
 
 
