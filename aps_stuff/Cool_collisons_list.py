@@ -28,7 +28,7 @@ for collision in collisions:
     output = ""
 
     jets,topjets,muons,electrons,photons,met = collision
-    cms.pretty_print(collision)
+    #cms.pretty_print(collision)
     
     ##################################################################
     #### Type of datafile
