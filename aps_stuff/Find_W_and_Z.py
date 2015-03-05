@@ -9,8 +9,8 @@ import lichen.lichen as lkn
 
 f = open(sys.argv[1])
 
-invarient_mass_W=[]
-invarient_mass_Z=[]
+invariant_mass_W=[]
+invariant_mass_Z=[]
 
 collisions = cms.get_collisions(f)
 
@@ -33,7 +33,7 @@ for collision in collisions:
             for j in range(i+1,njets):
 
                 mass=np.sqrt(((jets[i][0]+jets[j][0])**2)-((jets[i][1]+jets[j][1])**2+(jets[i][2]+jets[j][2])**2+(jets[i][3]+jets[j][3])**2))
-                invarient_mass_W.append(mass)
+                invariant_mass_W.append(mass)
 
     ##################################################################
     #### Find 2 same leptons to look for Z
@@ -45,7 +45,7 @@ for collision in collisions:
             for j in range (i+1,nelectrons):
                 if electrons[i][4]!=electrons[j][4]:
                     mass=np.sqrt(((electrons[i][0]+electrons[j][0])**2)-((electrons[i][1]+electrons[j][1])**2+(electrons[i][2]+electrons[j][2])**2+(electrons[i][3]+electrons[j][3])**2))
-                    invarient_mass_Z.append(mass)
+                    invariant_mass_Z.append(mass)
                    
 
     if nmuons>=2:
@@ -53,7 +53,7 @@ for collision in collisions:
             for j in range (i+1,nmuons):
                 if muons[i][4]!=muons[j][4]:
                     mass=np.sqrt(((muons[i][0]+muons[j][0])**2)-((muons[i][1]+muons[j][1])**2+(muons[i][2]+muons[j][2])**2+(muons[i][3]+muons[j][3])**2))
-                    invarient_mass_Z.append(mass)
+                    invariant_mass_Z.append(mass)
                         
         
          
@@ -71,8 +71,8 @@ for collision in collisions:
 plt.figure(1)
 
 
-#plt.hist(invarient_mass_W,bins=150,range=(0,400))
-lkn.hist_err(invarient_mass_W,bins=200)
+#plt.hist(invariant_mass_W,bins=150,range=(0,400))
+lkn.hist_err(invariant_mass_W,bins=200)
 plt.xlim([0,400])
 name = r"Hadronic Decay of W $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
@@ -82,8 +82,8 @@ plt.xlabel(r"Invariant Mass")
 plt.figure(2)
 
 
-#plt.hist(invarient_mass_Z,bins=100,range=(0,250))
-lkn.hist_err(invarient_mass_Z,bins=200)
+#plt.hist(invariant_mass_Z,bins=100,range=(0,250))
+lkn.hist_err(invariant_mass_Z,bins=200)
 plt.xlim([0,400])
 name = r"Decay of Z $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
