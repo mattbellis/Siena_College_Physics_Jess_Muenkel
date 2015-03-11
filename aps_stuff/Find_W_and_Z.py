@@ -5,18 +5,42 @@ import math
 import sys
 import lichen.lichen as lkn
 
+################################################################################
+# Inv mass
+################################################################################
+def inv_mass(p):
+
+    ptot = [0.0,0.0,0.0,0.0]
+    for pvals in p:
+        ptot[0] += pvals[0]
+        ptot[1] += pvals[1]
+        ptot[2] += pvals[2]
+        ptot[3] += pvals[3]
+
+    mass = np.sqrt(ptot[0]*ptot[0] - (ptot[1]*ptot[1] + ptot[2]*ptot[2] + ptot[3]*ptot[3]))
+
+    return mass
+
+################################################################################
+
+
 
 
 f = open(sys.argv[1])
 
 invariant_mass_W=[]
 invariant_mass_Z=[]
+invariant_mass_3jet=[]
 invariant_mass_top=[]
+btag = []
 
 collisions = cms.get_collisions(f)
 
 print "Number of collisions:"
 print len(collisions)
+
+combos = []
+ntops = []
 
 for collision in collisions:
 
@@ -33,7 +57,7 @@ for collision in collisions:
         for i in range(0,njets):
             for j in range(i+1,njets):
 
-                mass=np.sqrt(((jets[i][0]+jets[j][0])**2)-((jets[i][1]+jets[j][1])**2+(jets[i][2]+jets[j][2])**2+(jets[i][3]+jets[j][3])**2))
+                mass=inv_mass([jets[i],jets[j]])
                 invariant_mass_W.append(mass)
 
     ##################################################################
@@ -45,7 +69,7 @@ for collision in collisions:
         for i in range(0,nelectrons):
             for j in range (i+1,nelectrons):
                 if electrons[i][4]!=electrons[j][4]:
-                    mass=np.sqrt(((electrons[i][0]+electrons[j][0])**2)-((electrons[i][1]+electrons[j][1])**2+(electrons[i][2]+electrons[j][2])**2+(electrons[i][3]+electrons[j][3])**2))
+                    mass=inv_mass([electrons[i],electrons[j]])
                     invariant_mass_Z.append(mass)
                    
 
@@ -53,7 +77,7 @@ for collision in collisions:
         for i in range(0,nmuons):
             for j in range (i+1,nmuons):
                 if muons[i][4]!=muons[j][4]:
-                    mass=np.sqrt(((muons[i][0]+muons[j][0])**2)-((muons[i][1]+muons[j][1])**2+(muons[i][2]+muons[j][2])**2+(muons[i][3]+muons[j][3])**2))
+                    mass=inv_mass([muons[i],muons[j]])
                     invariant_mass_Z.append(mass)
                         
         
@@ -67,12 +91,35 @@ for collision in collisions:
     #### Find Hadronic Top Quark
     ##################################################################    
     
+    ncombos = 0
+    ntop = 0
     if njets>=3:
         for i in range(0,njets):
+            btag.append(jets[i][4])
+
             for j in range (i+1,njets):
                 for k in range (j+1,njets):
-                    mass=np.sqrt(((jets[i][0]+jets[j][0]+jets[k][0])**2)-((jets[i][1]+jets[j][1]+jets[k][1])**2+(jets[i][2]+jets[j][2]+jets[k][2])**2+(jets[i][3]+jets[j][3]+jets[k][3])**2))
-                    invariant_mass_top.append(mass)
+                    mass=inv_mass([jets[i],jets[j],jets[k]])
+                    invariant_mass_3jet.append(mass)
+                    ncombos += 1
+                    if (jets[i][4]>1.0):
+                        wmass = inv_mass([jets[j],jets[k]])
+                        if wmass>70 and wmass<100:
+                            invariant_mass_top.append(mass)
+                            ntop += 1
+                    elif (jets[j][4]>1.0):
+                        wmass = inv_mass([jets[i],jets[k]])
+                        if wmass>70 and wmass<100:
+                            invariant_mass_top.append(mass)
+                            ntop += 1
+                    elif (jets[k][4]>1.0):
+                        wmass = inv_mass([jets[i],jets[j]])
+                        if wmass>70 and wmass<100:
+                            invariant_mass_top.append(mass)
+                            ntop += 1
+
+    ntops.append(ntop)
+    combos.append(ncombos)
                    
 
     
@@ -80,36 +127,57 @@ for collision in collisions:
 
 
 
-'''plt.figure(1)
+plt.figure(figsize=(9,9))
 
 
+plt.subplot(3,3,1)
 #plt.hist(invariant_mass_W,bins=150,range=(0,400))
-lkn.hist_err(invariant_mass_W,bins=200)
-plt.xlim([0,400])
+lkn.hist_err(invariant_mass_W,bins=200,range=(0,400))
 name = r"Hadronic Decay of W $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
 plt.ylabel(r"Frequency")
 plt.xlabel(r"Invariant Mass")
 
-plt.figure(2)
 
-
-#plt.hist(invariant_mass_Z,bins=100,range=(0,250))
+plt.subplot(3,3,2)
 lkn.hist_err(invariant_mass_Z,bins=200)
 plt.xlim([0,400])
 name = r"Decay of Z $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
 plt.ylabel(r"Frequency")
-plt.xlabel(r"Invariant Mass")'''
+plt.xlabel(r"Invariant Mass")
 
-plt.figure(3)
-#plt.hist(invariant_mass_top,bins=100,range=(0,250))
-lkn.hist_err(invariant_mass_top,bins=350)
+plt.subplot(3,3,3)
+lkn.hist_err(invariant_mass_3jet,bins=350,range=(0,600))
 plt.xlim([0,600])
 name = r"Hadronic Top Decay $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
 plt.ylabel(r"Frequency")
-plt.xlabel(r"Invariant Mass")
+plt.xlabel(r"Invariant Mass of 3-jet combinations")
+
+plt.subplot(3,3,4)
+lkn.hist_err(combos)
+plt.ylabel(r"Entries")
+plt.xlabel(r"Number of combinations")
+
+btag = np.array(btag)
+plt.subplot(3,3,5)
+lkn.hist_err(btag[btag>0])
+plt.ylabel(r"Entries")
+plt.xlabel(r"b-tag")
+
+plt.subplot(3,3,6)
+lkn.hist_err(invariant_mass_top,bins=350,range=(0,600))
+plt.xlim([0,600])
+name = r"Hadronic Top Decay $%s$" % (sys.argv[1].split('/')[-1])
+plt.title(name)
+plt.ylabel(r"Frequency")
+plt.xlabel(r"Invariant Mass of top candidate")
+
+plt.subplot(3,3,7)
+lkn.hist_err(ntops)
+plt.ylabel(r"Entries")
+plt.xlabel(r"Number of top candidates")
 
 plt.show()
 
