@@ -16,7 +16,7 @@ collisions = cms.get_collisions(sys.argv[1])
 print "Number of collisions:"
 print len(collisions)
 
-outfilename = "default.out"
+outfilename = sys.argv[1].split('/')[-1].split('.')[0]+".dat"
 if (len(sys.argv)>2):
     outfilename = sys.argv[2]
 
@@ -83,7 +83,7 @@ for collision in collisions:
     ##################################################################    
 
     if len(b_tag)==0: 
-        output += "%f " % (-999)
+        output += "%f " % (-1)
     else:
         output += "%f " % (max(b_tag))
 
@@ -97,7 +97,7 @@ for collision in collisions:
             pt=math.sqrt(jets[i][1]**2+jets[i][2]**2+jets[i][3]**2)
             b_tag_pt.append(pt)
     if len(b_tag_pt)==0: 
-        output += "%f " % (-999)
+        output += "%f " % (-1)
     else:
         output += "%f " % (max(b_tag_pt))
 
@@ -111,7 +111,7 @@ for collision in collisions:
             pt=math.sqrt(jets[i][1]**2+jets[i][2]**2+jets[i][3]**2)
             non_b_tag_pt.append(pt)
     if len(non_b_tag_pt)==0: 
-        output += "%f " % (-999)
+        output += "%f " % (-1)
     else:
         output += "%f " % (max(non_b_tag_pt))
 
@@ -124,7 +124,7 @@ for collision in collisions:
         muon_pt.append(pt)
 
     if len(muon_pt)==0: 
-        output += "%f " % (-999)
+        output += "%f " % (-1)
     else:
         output += "%f " % (max(muon_pt))
 
@@ -157,7 +157,7 @@ for collision in collisions:
                 dR_list.append(dR)
                 
     if len(dR_list)==0: 
-        output += "%f " % (-999)
+        output += "%f " % (-1)
     else:
         output += "%f " % (max(dR_list))    
 
@@ -174,7 +174,7 @@ for collision in collisions:
         high_muon_pt.append(pt)
 
     if len(high_muon_pt)==0 or len(jets)==0: 
-        output += "%f " % (-999)
+        output += "%f " % (-1)
     else:
         k=high_muon_pt.index(max(high_muon_pt))
         
