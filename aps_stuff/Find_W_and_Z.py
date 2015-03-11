@@ -11,6 +11,7 @@ f = open(sys.argv[1])
 
 invariant_mass_W=[]
 invariant_mass_Z=[]
+invariant_mass_top=[]
 
 collisions = cms.get_collisions(f)
 
@@ -62,13 +63,24 @@ for collision in collisions:
 
 
 
+    ##################################################################
+    #### Find Hadronic Top Quark
+    ##################################################################    
+    
+    if njets>=3:
+        for i in range(0,njets):
+            for j in range (i+1,njets):
+                for k in range (j+1,njets):
+                    mass=np.sqrt(((jets[i][0]+jets[j][0]+jets[k][0])**2)-((jets[i][1]+jets[j][1]+jets[k][1])**2+(jets[i][2]+jets[j][2]+jets[k][2])**2+(jets[i][3]+jets[j][3]+jets[k][3])**2))
+                    invariant_mass_top.append(mass)
+                   
+
+    
 
 
 
 
-
-
-plt.figure(1)
+'''plt.figure(1)
 
 
 #plt.hist(invariant_mass_W,bins=150,range=(0,400))
@@ -88,8 +100,16 @@ plt.xlim([0,400])
 name = r"Decay of Z $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
 plt.ylabel(r"Frequency")
-plt.xlabel(r"Invariant Mass")
+plt.xlabel(r"Invariant Mass")'''
 
+plt.figure(3)
+#plt.hist(invariant_mass_top,bins=100,range=(0,250))
+lkn.hist_err(invariant_mass_top,bins=350)
+plt.xlim([0,600])
+name = r"Hadronic Top Decay $%s$" % (sys.argv[1].split('/')[-1])
+plt.title(name)
+plt.ylabel(r"Frequency")
+plt.xlabel(r"Invariant Mass")
 
 plt.show()
 
