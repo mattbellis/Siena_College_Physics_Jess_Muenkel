@@ -28,13 +28,18 @@ nevents = len(collisions)
 
 for i in xrange(nevents):
     # Animate 
-    #lines,fig,ax = cms.display_collision3D(collisions[i],fig=fig,ax=ax)
-    #plt.pause(0.0001)
+    lines,fig,ax = cms.display_collision3D(collisions[i],fig=fig,ax=ax)
+    plt.xlabel(r"$P_x$ $(GeV/c^2)$")
+    plt.ylabel(r"$P_y$ $(GeV/c^2)$")
+    ax.set_zlabel(r"$P_z$ $(GeV/c^2)$")
+    plt.title("4-Vector Display $%s$" % (sys.argv[1].split('/')[-1]))
+    plt.pause(0.0001)
+
     #name = "Plots/img_%04d.png" % (i)
     #plt.savefig(name)
 
     jets,topjets,muons,electrons,photons,met = collisions[i]
-
+    '''
     # Find interesting events and save those subset
     is_either_muon_high_pt = False
     for muon in muons:
@@ -48,7 +53,7 @@ for i in xrange(nevents):
         collisions_to_save.append(collisions[i])
 
 # Write it to a file for later processing
-cms.write_to_file(collisions_to_save,'interesting_zz')
+cms.write_to_file(collisions_to_save,'interesting_zz')'''
 
-#plt.show(block=False)
+plt.show(block=False)
 

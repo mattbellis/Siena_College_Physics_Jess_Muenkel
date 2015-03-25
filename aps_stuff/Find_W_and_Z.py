@@ -65,12 +65,12 @@ for collision in collisions:
     ##################################################################    
     nelectrons=len(electrons)
     nmuons=len(muons)
-    if nelectrons>=2:
+    '''if nelectrons>=2:
         for i in range(0,nelectrons):
             for j in range (i+1,nelectrons):
                 if electrons[i][4]!=electrons[j][4]:
                     mass=inv_mass([electrons[i],electrons[j]])
-                    invariant_mass_Z.append(mass)
+                    invariant_mass_Z.append(mass)'''
                    
 
     if nmuons>=2:
@@ -142,24 +142,42 @@ plt.ylabel(r"Frequency")
 plt.xlabel(r"Invariant Mass")'''
 
 '''plt.figure(2)
-#plt.subplot(3,3,2)
-lkn.hist_err(invariant_mass_Z,bins=200)
-plt.xlim([0,400])
-name = r"Decay of Z $%s$" % (sys.argv[1].split('/')[-1])
+
+#plt.subplot(1,2,1)
+plt.hist(invariant_mass_Z,bins=100, range=(0,200))
+#lkn.hist_err(invariant_mass_Z,bins=200)
+plt.xlim([0,200])
+#plt.ylim([0,250])
+name = r"Drell Yan Decay of Z $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
 plt.ylabel(r"Frequency")
-plt.xlabel(r"Invariant Mass")'''
+plt.xlabel(r"Invariant Mass $(GeV/c^2)$")
+
+#plt.subplot(1,2,2)
+#lkn.hist_err(invariant_mass_Z,bins=100, range=(0,200))
+#plt.xlim([0,200])
+#plt.ylim([0,250])
+#plt.xlabel(r"Invariant Mass $(GeV/c^2)$")
+#plt.title("Lichen")'''
 
 '''plt.figure(3)
-#plt.subplot(3,3,3)
-plt.hist(invariant_mass_3jet,bins=300,range=(0,600))
+plt.subplot(1,2,1)
+plt.hist(invariant_mass_3jet,bins=120,range=(0,600))
 #lkn.hist_err(invariant_mass_3jet,bins=350,range=(0,600))
 plt.xlim([0,600])
 name = r"Hadronic Top Decay $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
 plt.ylabel(r"Frequency")
 plt.xlabel(r"Invariant Mass of 3-jet combinations $(GeV/c^2)$")
+
+
+plt.subplot(1,2,2)
+lkn.hist_err(invariant_mass_3jet,bins=80,range=(0,600))
+plt.xlim([0,600])
+plt.title("Lichen")
+plt.xlabel(r"Invariant Mass of 3-jet combinations $(GeV/c^2)$")
 '''
+
 #plt.subplot(3,3,4)
 #lkn.hist_err(combos)
 #plt.ylabel(r"Entries")
@@ -171,15 +189,24 @@ plt.xlabel(r"Invariant Mass of 3-jet combinations $(GeV/c^2)$")
 #plt.ylabel(r"Entries")
 #plt.xlabel(r"b-tag")
 
-#plt.subplot(3,3,6)
-plt.figure(4)
-plt.hist(invariant_mass_top,bins=300,range=(0,600))
+
+'''plt.figure(4)
+#plt.subplot(1,2,1)
+plt.hist(invariant_mass_top,bins=100,range=(0,600))
 #lkn.hist_err(invariant_mass_top,bins=350,range=(0,600))
 plt.xlim([0,600])
 name = r"Hadronic Top Decay $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
 plt.ylabel(r"Frequency")
-plt.xlabel(r"Invariant Mass of top candidate $(GeV/c^2)$")
+plt.xlabel(r"Invariant Mass of top candidate $(GeV/c^2)$")'''
+
+#plt.subplot(1,2,2)
+#lkn.hist_err(invariant_mass_top,bins=100,range=(0,600))
+#plt.xlim([0,600])
+#plt.title("Lichen")
+#plt.ylabel(r"Frequency")
+#plt.xlabel(r"Invariant Mass of top candidate $(GeV/c^2)$")
+
 
 #plt.subplot(3,3,7)
 #lkn.hist_err(ntops)
@@ -190,13 +217,23 @@ plt.xlabel(r"Invariant Mass of top candidate $(GeV/c^2)$")
 #QCD # of Jets
 
 plt.figure(5)
-plt.hist(QCD_jets,bins=10,range=(0,10))
+#plt.subplot(1,2,1)
+plt.hist(QCD_jets,bins=10,range=(1,10))
 #lkn.hist_err(QCD_jets,bins=10,range=(0,10))
-plt.xlim([0,10])
+plt.xlim([1,10])
+#plt.ylim([0,70])
 name = r"QCD Numer of Jets $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
 plt.ylabel(r"Frequency")
 plt.xlabel(r"Number of Jets per Event")
+
+#plt.subplot(1,2,2)
+#lkn.hist_err(QCD_jets,bins=11,range=(0,10))
+#plt.xlim([0,10])
+#plt.ylim([0,70])
+
+#plt.title("Licken")
+#plt.xlabel(r"Number of Jets per Event")
 
 plt.show()
 
