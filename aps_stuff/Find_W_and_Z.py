@@ -33,7 +33,7 @@ invariant_mass_Z=[]
 invariant_mass_3jet=[]
 invariant_mass_top=[]
 btag = []
-
+QCD_jets=[]
 collisions = cms.get_collisions(f)
 
 print "Number of collisions:"
@@ -121,63 +121,82 @@ for collision in collisions:
     ntops.append(ntop)
     combos.append(ncombos)
                    
-
+    ##################################################################
+    #### Find number of jets for QCD
+    ##################################################################
+    QCD_jets.append(len(jets))
     
 
 
 
 
-plt.figure(figsize=(9,9))
+#plt.figure(figsize=(9,9))
 
-
-plt.subplot(3,3,1)
+'''plt.figure(1)
+#plt.subplot(3,3,1)
 #plt.hist(invariant_mass_W,bins=150,range=(0,400))
 lkn.hist_err(invariant_mass_W,bins=200,range=(0,400))
 name = r"Hadronic Decay of W $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
 plt.ylabel(r"Frequency")
-plt.xlabel(r"Invariant Mass")
+plt.xlabel(r"Invariant Mass")'''
 
-
-plt.subplot(3,3,2)
+'''plt.figure(2)
+#plt.subplot(3,3,2)
 lkn.hist_err(invariant_mass_Z,bins=200)
 plt.xlim([0,400])
 name = r"Decay of Z $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
 plt.ylabel(r"Frequency")
-plt.xlabel(r"Invariant Mass")
+plt.xlabel(r"Invariant Mass")'''
 
-plt.subplot(3,3,3)
-lkn.hist_err(invariant_mass_3jet,bins=350,range=(0,600))
+'''plt.figure(3)
+#plt.subplot(3,3,3)
+plt.hist(invariant_mass_3jet,bins=300,range=(0,600))
+#lkn.hist_err(invariant_mass_3jet,bins=350,range=(0,600))
 plt.xlim([0,600])
 name = r"Hadronic Top Decay $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
 plt.ylabel(r"Frequency")
-plt.xlabel(r"Invariant Mass of 3-jet combinations")
+plt.xlabel(r"Invariant Mass of 3-jet combinations $(GeV/c^2)$")
+'''
+#plt.subplot(3,3,4)
+#lkn.hist_err(combos)
+#plt.ylabel(r"Entries")
+#plt.xlabel(r"Number of combinations")
 
-plt.subplot(3,3,4)
-lkn.hist_err(combos)
-plt.ylabel(r"Entries")
-plt.xlabel(r"Number of combinations")
+#btag = np.array(btag)
+#plt.subplot(3,3,5)
+#lkn.hist_err(btag[btag>0])
+#plt.ylabel(r"Entries")
+#plt.xlabel(r"b-tag")
 
-btag = np.array(btag)
-plt.subplot(3,3,5)
-lkn.hist_err(btag[btag>0])
-plt.ylabel(r"Entries")
-plt.xlabel(r"b-tag")
-
-plt.subplot(3,3,6)
-lkn.hist_err(invariant_mass_top,bins=350,range=(0,600))
+#plt.subplot(3,3,6)
+plt.figure(4)
+plt.hist(invariant_mass_top,bins=300,range=(0,600))
+#lkn.hist_err(invariant_mass_top,bins=350,range=(0,600))
 plt.xlim([0,600])
 name = r"Hadronic Top Decay $%s$" % (sys.argv[1].split('/')[-1])
 plt.title(name)
 plt.ylabel(r"Frequency")
-plt.xlabel(r"Invariant Mass of top candidate")
+plt.xlabel(r"Invariant Mass of top candidate $(GeV/c^2)$")
 
-plt.subplot(3,3,7)
-lkn.hist_err(ntops)
-plt.ylabel(r"Entries")
-plt.xlabel(r"Number of top candidates")
+#plt.subplot(3,3,7)
+#lkn.hist_err(ntops)
+#plt.ylabel(r"Entries")
+#plt.xlabel(r"Number of top candidates")
+
+
+#QCD # of Jets
+
+plt.figure(5)
+plt.hist(QCD_jets,bins=10,range=(0,10))
+#lkn.hist_err(QCD_jets,bins=10,range=(0,10))
+plt.xlim([0,10])
+name = r"QCD Numer of Jets $%s$" % (sys.argv[1].split('/')[-1])
+plt.title(name)
+plt.ylabel(r"Frequency")
+plt.xlabel(r"Number of Jets per Event")
 
 plt.show()
 
